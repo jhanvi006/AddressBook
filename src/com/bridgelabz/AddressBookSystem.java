@@ -30,9 +30,66 @@ public class AddressBookSystem {
     public void displayContacts(){
         System.out.println(contactDetails);
     }
+    public void editDetails(String searchFirstName){
+        for (Contacts contact : contactDetails) {
+            System.out.println("First name: "+contact.getFirstName());
+            if (contact.getFirstName().equals(searchFirstName)){
+                System.out.println("Enter the number to edit respective info: ");
+                System.out.println("1. First Name \n2. Last Name \n3. Address \n4. City " +
+                        "\n5. State \n6. Zip Code \n7. Contact No \n8. Email");
+                int index = sc.nextInt();
+                System.out.println("Enter value to update: ");
+                switch (index){
+                    case 1:
+                        String updatedFirstName = sc.next();
+                        contact.setFirstName(updatedFirstName);
+                        break;
+                    case 2:
+                        String updatedLastName = sc.next();
+                        contact.setLastName(updatedLastName);
+                        break;
+                    case 3:
+                        String updatedAddress = sc.next();
+                        contact.setAddress(updatedAddress);
+                        break;
+                    case 4:
+                        String updatedCity = sc.next();
+                        contact.setCity(updatedCity);
+                        break;
+                    case 5:
+                        String updatedState = sc.next();
+                        contact.setState(updatedState);
+                        break;
+                    case 6:
+                        String updatedZipCode = sc.next();
+                        contact.setZipCode(updatedZipCode);
+                        break;
+                    case 7:
+                        String updatedContact = sc.next();
+                        contact.setContactNo(updatedContact);
+                        break;
+                    case 8:
+                        String updatedEmail = sc.next();
+                        contact.setEmail(updatedEmail);
+                        break;
+                    default:
+                        System.out.println("Invalid number!");
+                }
+            }
+            else {
+                System.out.println("No record found!");
+            }
+        }
+    }
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         AddressBookSystem addressOfPerson1 = new AddressBookSystem();
         addressOfPerson1.addDetails();
+        addressOfPerson1.displayContacts();
+        System.out.println("Enter First Name for which you want to modify info: ");
+        String fName = sc.nextLine();
+        addressOfPerson1.editDetails(fName);
+        System.out.println("Updated Details: ");
         addressOfPerson1.displayContacts();
     }
 }
