@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class AddressBookSystem {
     ArrayList<Contacts> contactDetails = new ArrayList();
     Scanner sc = new Scanner(System.in);
-
     public void addDetails(){
         Contacts info = new Contacts();
         System.out.println("Enter first name: ");
@@ -27,9 +26,12 @@ public class AddressBookSystem {
         System.out.println("Enter email: ");
         info.setEmail(sc.nextLine());
         contactDetails.add(info);
+        System.out.println("Contact details added!");
     }
     public void displayContacts(){
-        System.out.println(contactDetails);
+        for (Contacts contactDetailsValue : contactDetails){
+            System.out.println(contactDetailsValue);
+        }
     }
     public void editDetails(){
         System.out.println("Enter First Name for which you want to modify info: ");
@@ -105,11 +107,44 @@ public class AddressBookSystem {
         System.out.println("Contact is removed!");
         displayContacts();
     }
+    public static void displayActionMenu(AddressBookSystem addressDetails){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter a number to perform action: \n1. Add details \n2. Edit details \n3. Delete details \n4. Display details \n5. Exit");
+        int selectMenuOption = sc.nextInt();
+        do {
+            switch (selectMenuOption) {
+                case 1:
+                    /*  Add contact details in address book */
+                    addressDetails.addDetails();
+                    break;
+                case 2:
+                    /*  Edit contact details in address book */
+                    addressDetails.editDetails();
+                    break;
+                case 3:
+                    /*  Delete contact details */
+                    addressDetails.deleteContact();
+                    break;
+                case 4:
+                    /*  Display contact details */
+                    addressDetails.displayContacts();
+                    break;
+                case 5:
+                    System.out.println("Exit!");
+                    break;
+                default:
+                    System.out.println("Invalid option selected.");
+                    break;
+            }
+        }while (selectMenuOption != 5);
+    }
     public static void main(String[] args) {
-        AddressBookSystem addressOfPerson1 = new AddressBookSystem();
-        addressOfPerson1.addDetails();
-        addressOfPerson1.displayContacts();
-        addressOfPerson1.editDetails();
-        addressOfPerson1.deleteContact();
+        AddressBookSystem addressDetails = new AddressBookSystem();
+        displayActionMenu(addressDetails);
+//        AddressBookSystem addressOfPerson1 = new AddressBookSystem();
+//        addressOfPerson1.addDetails();
+//        addressOfPerson1.displayContacts();
+//        addressOfPerson1.editDetails();
+//        addressOfPerson1.deleteContact();
     }
 }
