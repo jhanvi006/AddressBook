@@ -31,6 +31,7 @@ public class AddressBookSystem {
     public void displayContacts(){
         for (Contacts contactDetailsValue : contactDetails){
             System.out.println(contactDetailsValue);
+            System.out.println("-----------------------------");
         }
     }
     public void editDetails(){
@@ -84,34 +85,42 @@ public class AddressBookSystem {
                     default:
                         System.out.println("Invalid number!");
                 }
+                /*  Display updated contact */
+                System.out.println("Details updated");
             }
             else {
                 System.out.println("No record found!");
             }
         }
-        /*  Display updated contact */
-        System.out.println("Updated Details: ");
-        displayContacts();
     }
     public void deleteContact(){
+        System.out.println("Enter email for which you want to delete contact: ");
+        String searchEmail = sc.nextLine();
         Iterator<Contacts> removeContact = contactDetails.iterator();
         /*  Checking the next element where
         *   condition holds true till there is single element
-        *   in the List using hasnext() method
+        *   in the List using hasNext() method
         */
         while (removeContact.hasNext()){
             /*  Move cursor to next element */
             Contacts nextElement = removeContact.next();
-            removeContact.remove();
+            if (nextElement.getEmail().equals(searchEmail)) {
+                removeContact.remove();
+                System.out.println("Contact is removed!");
+                break;
+            }
+            else {
+                System.out.println("Contact not found.");
+            }
         }
-        System.out.println("Contact is removed!");
-        displayContacts();
     }
     public static void displayActionMenu(AddressBookSystem addressDetails){
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter a number to perform action: \n1. Add details \n2. Edit details \n3. Delete details \n4. Display details \n5. Exit");
-        int selectMenuOption = sc.nextInt();
+        int selectMenuOption;
         do {
+            System.out.println("Enter a number to perform action: \n1. Add details \n2. Edit details \n3. Delete details \n4. Display details \n5. Exit");
+            selectMenuOption = sc.nextInt();
+
             switch (selectMenuOption) {
                 case 1:
                     /*  Add contact details in address book */
@@ -141,10 +150,5 @@ public class AddressBookSystem {
     public static void main(String[] args) {
         AddressBookSystem addressDetails = new AddressBookSystem();
         displayActionMenu(addressDetails);
-//        AddressBookSystem addressOfPerson1 = new AddressBookSystem();
-//        addressOfPerson1.addDetails();
-//        addressOfPerson1.displayContacts();
-//        addressOfPerson1.editDetails();
-//        addressOfPerson1.deleteContact();
     }
 }
