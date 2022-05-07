@@ -1,38 +1,38 @@
 package com.bridgelabz;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Scanner;
+import java.util.*;
 
 public class AddressBookSystem {
-    ArrayList<Contacts> contactDetails = new ArrayList();
-    Scanner sc = new Scanner(System.in);
-    public void addDetails(){
+    static ArrayList<Contacts> contactDetails = new ArrayList();
+    static Scanner sc = new Scanner(System.in);
+    public static ArrayList<Contacts> addDetails(){
         Contacts info = new Contacts();
         System.out.println("Enter first name: ");
-        info.setFirstName(sc.nextLine());
+        info.setFirstName(sc.next());
         System.out.println("Enter last name: ");
-        info.setLastName(sc.nextLine());
+        info.setLastName(sc.next());
         System.out.println("Enter address: ");
-        info.setAddress(sc.nextLine());
+        info.setAddress(sc.next());
         System.out.println("Enter city name: ");
-        info.setCity(sc.nextLine());
+        info.setCity(sc.next());
         System.out.println("Enter state name: ");
-        info.setState(sc.nextLine());
+        info.setState(sc.next());
         System.out.println("Enter zip code: ");
-        info.setZipCode(sc.nextLine());
+        info.setZipCode(sc.next());
         System.out.println("Enter contact no.: ");
-        info.setContactNo(sc.nextLine());
+        info.setContactNo(sc.next());
         System.out.println("Enter email: ");
-        info.setEmail(sc.nextLine());
+        info.setEmail(sc.next());
         contactDetails.add(info);
         System.out.println("Contact details added!");
+        return contactDetails;
     }
     public void displayContacts(){
-        for (Contacts contactDetailsValue : contactDetails){
+        /*for (Contacts contactDetailsValue : contactDetails){
             System.out.println(contactDetailsValue);
             System.out.println("-----------------------------");
-        }
+        }*/
+        System.out.println(Arrays.asList(addressBookList));
     }
     public void editDetails(){
         System.out.println("Enter First Name for which you want to modify info: ");
@@ -115,7 +115,6 @@ public class AddressBookSystem {
         }
     }
     public static void displayActionMenu(AddressBookSystem addressDetails){
-        Scanner sc = new Scanner(System.in);
         int selectMenuOption;
         do {
             System.out.println("Enter a number to perform action: \n1. Add details \n2. Edit details \n3. Delete details \n4. Display details \n5. Exit");
@@ -147,8 +146,25 @@ public class AddressBookSystem {
             }
         }while (selectMenuOption != 5);
     }
+    static HashMap<String, ArrayList<Contacts>> addressBookList = new HashMap<>();
+    public static void createAddressBook(AddressBookSystem addressDetails){
+        char choice = 'Y';
+        String addressBookName;
+        do {
+            System.out.println("Enter name of Address Book: ");
+            addressBookName = sc.next();
+            if (addressBookList.containsKey(addressBookName))
+                System.out.println("Address Book with "+addressBookName+" name already exists.");
+            else {
+                addressBookList.put(addressBookName, addDetails());
+                displayActionMenu(addressDetails);
+            }
+            System.out.println("To continue press Y otherwise press N");
+            choice = sc.next().charAt(0);
+        }while (choice != 'n' && choice != 'N');
+    }
     public static void main(String[] args) {
         AddressBookSystem addressDetails = new AddressBookSystem();
-        displayActionMenu(addressDetails);
+        createAddressBook(addressDetails);
     }
 }
