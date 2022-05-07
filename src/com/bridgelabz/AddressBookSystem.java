@@ -3,9 +3,8 @@ package com.bridgelabz;
 import java.util.*;
 
 public class AddressBookSystem {
-    static ArrayList<Contacts> contactDetails = new ArrayList();
     static Scanner sc = new Scanner(System.in);
-    public static ArrayList<Contacts> addDetails(){
+    public static ArrayList<Contacts> addDetails(ArrayList<Contacts> contactDetails){
         Contacts info = new Contacts();
         System.out.println("Enter first name: ");
         info.setFirstName(sc.next());
@@ -27,16 +26,12 @@ public class AddressBookSystem {
         System.out.println("Contact details added!");
         return contactDetails;
     }
-    public void displayContacts(){
-        /*for (Contacts contactDetailsValue : contactDetails){
-            System.out.println(contactDetailsValue);
-            System.out.println("-----------------------------");
-        }*/
+    public static void displayContacts(){
         System.out.println(Arrays.asList(addressBookList));
     }
-    public void editDetails(){
+    public void editDetails(ArrayList<Contacts> contactDetails){
         System.out.println("Enter First Name for which you want to modify info: ");
-        String searchFirstName = sc.nextLine();
+        String searchFirstName = sc.next();
         /*  Iterate to search for first name */
         for (Contacts contact : contactDetails) {
             /*  compare first name
@@ -93,9 +88,9 @@ public class AddressBookSystem {
             }
         }
     }
-    public void deleteContact(){
+    public void deleteContact(ArrayList<Contacts> contactDetails){
         System.out.println("Enter email for which you want to delete contact: ");
-        String searchEmail = sc.nextLine();
+        String searchEmail = sc.next();
         Iterator<Contacts> removeContact = contactDetails.iterator();
         /*  Checking the next element where
         *   condition holds true till there is single element
@@ -114,7 +109,7 @@ public class AddressBookSystem {
             }
         }
     }
-    public static void displayActionMenu(AddressBookSystem addressDetails){
+    public static void displayActionMenu(AddressBookSystem addressDetails, ArrayList<Contacts> contactDetails){
         int selectMenuOption;
         do {
             System.out.println("Enter a number to perform action: \n1. Add details \n2. Edit details \n3. Delete details \n4. Display details \n5. Exit");
@@ -123,15 +118,15 @@ public class AddressBookSystem {
             switch (selectMenuOption) {
                 case 1:
                     /*  Add contact details in address book */
-                    addressDetails.addDetails();
+                    addressDetails.addDetails(contactDetails);
                     break;
                 case 2:
                     /*  Edit contact details in address book */
-                    addressDetails.editDetails();
+                    addressDetails.editDetails(contactDetails);
                     break;
                 case 3:
                     /*  Delete contact details */
-                    addressDetails.deleteContact();
+                    addressDetails.deleteContact(contactDetails);
                     break;
                 case 4:
                     /*  Display contact details */
@@ -153,11 +148,14 @@ public class AddressBookSystem {
         do {
             System.out.println("Enter name of Address Book: ");
             addressBookName = sc.next();
-            if (addressBookList.containsKey(addressBookName))
-                System.out.println("Address Book with "+addressBookName+" name already exists.");
+            if (addressBookList.containsKey(addressBookName)) {
+                System.out.println("Address Book with " + addressBookName + " name already exists.");
+//                displayActionMenu(addressDetails, contactDetails);
+            }
             else {
-                addressBookList.put(addressBookName, addDetails());
-                displayActionMenu(addressDetails);
+                ArrayList<Contacts> contactDetails = new ArrayList<>();
+                addressBookList.put(addressBookName, addDetails(contactDetails));
+                displayActionMenu(addressDetails, contactDetails);
             }
             System.out.println("To continue press Y otherwise press N");
             choice = sc.next().charAt(0);
