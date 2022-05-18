@@ -1,5 +1,4 @@
 package com.bridgelabz;
-
 import java.util.*;
 
 public class AddressBookSystem {
@@ -7,23 +6,31 @@ public class AddressBookSystem {
     public static ArrayList<Contacts> addDetails(ArrayList<Contacts> contactDetails){
         Contacts info = new Contacts();
         System.out.println("Enter first name: ");
-        info.setFirstName(sc.next());
-        System.out.println("Enter last name: ");
-        info.setLastName(sc.next());
-        System.out.println("Enter address: ");
-        info.setAddress(sc.next());
-        System.out.println("Enter city name: ");
-        info.setCity(sc.next());
-        System.out.println("Enter state name: ");
-        info.setState(sc.next());
-        System.out.println("Enter zip code: ");
-        info.setZipCode(sc.next());
-        System.out.println("Enter contact no.: ");
-        info.setContactNo(sc.next());
-        System.out.println("Enter email: ");
-        info.setEmail(sc.next());
-        contactDetails.add(info);
-        System.out.println("Contact details added!");
+        String firstName = sc.next();
+        Contacts searchFirstName = contactDetails.stream()
+                .filter(name -> firstName.equals(name.getFirstName()))
+                .findAny().orElse(null);
+        if (searchFirstName == null) {
+            info.setFirstName(firstName);
+            System.out.println("Enter last name: ");
+            info.setLastName(sc.next());
+            System.out.println("Enter address: ");
+            info.setAddress(sc.next());
+            System.out.println("Enter city name: ");
+            info.setCity(sc.next());
+            System.out.println("Enter state name: ");
+            info.setState(sc.next());
+            System.out.println("Enter zip code: ");
+            info.setZipCode(sc.next());
+            System.out.println("Enter contact no.: ");
+            info.setContactNo(sc.next());
+            System.out.println("Enter email: ");
+            info.setEmail(sc.next());
+            contactDetails.add(info);
+            System.out.println("Contact details added!");
+        }else {
+            System.out.println("Contact details for "+firstName+" already exists.");
+        }
         return contactDetails;
     }
     public static void displayContacts(){
@@ -82,11 +89,10 @@ public class AddressBookSystem {
                 }
                 /*  Display updated contact */
                 System.out.println("Details updated");
-            }
-            else {
-                System.out.println("No record found!");
+                return;
             }
         }
+        System.out.println("No record found!");
     }
     public void deleteContact(ArrayList<Contacts> contactDetails){
         System.out.println("Enter email for which you want to delete contact: ");
@@ -102,12 +108,10 @@ public class AddressBookSystem {
             if (nextElement.getEmail().equals(searchEmail)) {
                 removeContact.remove();
                 System.out.println("Contact is removed!");
-                break;
-            }
-            else {
-                System.out.println("Contact not found.");
+                return;
             }
         }
+        System.out.println("Contact not found.");
     }
     public static void displayActionMenu(AddressBookSystem addressDetails, ArrayList<Contacts> contactDetails){
         int selectMenuOption;
