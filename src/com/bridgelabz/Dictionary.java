@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Dictionary {
     public static void cityPersonDictionary(HashMap<String, ArrayList<Contacts>> addressBookList) {
-        Hashtable<String, String> cityPersonDict = new Hashtable<String, String>();
+        Hashtable<String, String> cityPersonDict = new Hashtable();
         for (Map.Entry<String, ArrayList<Contacts>> contactDetails:addressBookList.entrySet()) {
             for (Contacts contact: contactDetails.getValue()) {
                 String person = contact.getFirstName()+" "+contact.getLastName();
@@ -18,7 +18,7 @@ public class Dictionary {
     }
 
     public static void statePersonDictionary(HashMap<String, ArrayList<Contacts>> addressBookList) {
-        Hashtable<String, String> statePersonDict = new Hashtable<String, String>();
+        Hashtable<String, String> statePersonDict = new Hashtable();
         for (Map.Entry<String, ArrayList<Contacts>> contactDetails:addressBookList.entrySet()) {
             for (Contacts contact: contactDetails.getValue()) {
                 String person = contact.getFirstName()+" "+contact.getLastName();

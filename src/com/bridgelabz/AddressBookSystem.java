@@ -145,13 +145,35 @@ public class AddressBookSystem {
                 break;
         }
     }
+    private void countContact() {
+        HashMap<String, Integer> countContactByCity = new HashMap<>();
+        HashMap<String, Integer> countContactByState = new HashMap<>();
+        for (Map.Entry<String, ArrayList<Contacts>> contactDetails:addressBookList.entrySet()) {
+            for (Contacts contact: contactDetails.getValue()) {
+                Integer cityCount = countContactByCity.get(contact.getCity());
+                Integer stateCount = countContactByState.get(contact.getState());
+                if (cityCount == null)
+                    countContactByCity.put(contact.getCity(), 1);
+                else
+                    countContactByCity.put(contact.getCity(), cityCount + 1);
+                if (stateCount == null)
+                    countContactByState.put(contact.getState(), 1);
+                else
+                    countContactByState.put(contact.getState(), stateCount + 1);
+            }
+        }
+        System.out.println("No. of contacts from different cities are ");
+        System.out.println(countContactByCity);
+        System.out.println("No. of contacts from different states are ");
+        System.out.println(countContactByState);
+    }
     public static void displayActionMenu(AddressBookSystem addressDetails, ArrayList<Contacts> contactDetails){
         int selectMenuOption;
         do {
             System.out.println("Enter a number to perform action: \n1. Add contact details " +
                     "\n2. Edit contact details \n3. Delete contact details " +
                     "\n4. Display contact details \n5. Search contact by city or state" +
-                    "\n6. View Dictionary \n0. Exit");
+                    "\n6. View Dictionary \n7. Count Contact \n0. Exit");
             selectMenuOption = sc.nextInt();
 
             switch (selectMenuOption) {
@@ -178,6 +200,10 @@ public class AddressBookSystem {
                 case 6:
                     /*  View Dictionary */
                     addressDetails.dictionary();
+                    break;
+                case 7:
+                    /*  Count contacts based on city and state  */
+                    addressDetails.countContact();
                     break;
                 case 0:
                     System.out.println("Exit!");
