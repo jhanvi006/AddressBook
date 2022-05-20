@@ -33,25 +33,6 @@ public class AddressBookSystem {
         }
         return contactDetails;
     }
-    public void searchContact(HashMap<String, ArrayList<Contacts>> addressBookList) {
-        System.out.println("Enter a number for : \n1. Search by city \n2. Search by state");
-        int selectOption = sc.nextInt();
-        switch (selectOption) {
-            case 1:
-                Search.searchByCity(addressBookList);
-                break;
-            case 2:
-                Search.searchByState(addressBookList);
-                break;
-            default:
-                System.out.println("Invalid choice!");
-                break;
-        }
-    }
-    public static ArrayList<Contacts> displayContacts(){
-        System.out.println(Arrays.asList(addressBookList));
-        return null;
-    }
     public void editDetails(ArrayList<Contacts> contactDetails){
         System.out.println("Enter First Name for which you want to modify info: ");
         String searchFirstName = sc.next();
@@ -129,13 +110,48 @@ public class AddressBookSystem {
         }
         System.out.println("Contact not found.");
     }
+    public static ArrayList<Contacts> displayContacts(){
+        System.out.println(Arrays.asList(addressBookList));
+        return null;
+    }
+    public void searchContact() {
+        System.out.println("Enter a number for : \n1. Search by city \n2. Search by state");
+        int selectOption = sc.nextInt();
+        switch (selectOption) {
+            case 1:
+                Search.searchByCity(addressBookList);
+                break;
+            case 2:
+                Search.searchByState(addressBookList);
+                break;
+            default:
+                System.out.println("Invalid choice!");
+                break;
+        }
+    }
+    public void dictionary(){
+        System.out.println("Select option to get dictionary : \n1. City & Person Dictionary" +
+                " \n2. State & Person Dictionary");
+        int selectOption = sc.nextInt();
+        switch (selectOption) {
+            case 1:
+                Dictionary.cityPersonDictionary(addressBookList);
+                break;
+            case 2:
+                Dictionary.statePersonDictionary(addressBookList);
+                break;
+            default:
+                System.out.println("Invalid choice!");
+                break;
+        }
+    }
     public static void displayActionMenu(AddressBookSystem addressDetails, ArrayList<Contacts> contactDetails){
         int selectMenuOption;
         do {
             System.out.println("Enter a number to perform action: \n1. Add contact details " +
                     "\n2. Edit contact details \n3. Delete contact details " +
                     "\n4. Display contact details \n5. Search contact by city or state" +
-                    "\n0. Exit");
+                    "\n6. View Dictionary \n0. Exit");
             selectMenuOption = sc.nextInt();
 
             switch (selectMenuOption) {
@@ -157,7 +173,11 @@ public class AddressBookSystem {
                     break;
                 case 5:
                     /*  Display contact details of a specific city  */
-                    addressDetails.searchContact(addressBookList);
+                    addressDetails.searchContact();
+                    break;
+                case 6:
+                    /*  View Dictionary */
+                    addressDetails.dictionary();
                     break;
                 case 0:
                     System.out.println("Exit!");
@@ -177,7 +197,6 @@ public class AddressBookSystem {
             addressBookName = sc.next();
             if (addressBookList.containsKey(addressBookName)) {
                 System.out.println("Address Book with " + addressBookName + " name already exists.");
-//                displayActionMenu(addressDetails, );
             }
             else {
                 ArrayList<Contacts> contactDetails = new ArrayList<>();
