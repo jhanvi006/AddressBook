@@ -168,11 +168,39 @@ public class AddressBookSystem {
         System.out.println("No. of contacts from different states are ");
         System.out.println(countContactByState);
     }
-    public void sortContacts(ArrayList<Contacts> contactDetails){
+    public void sortContactsByName(ArrayList<Contacts> contactDetails){
         List<Contacts> sortedContactDetails = contactDetails.stream()
                 .sorted(Comparator.comparing(Contacts::getFirstName))
                 .collect(Collectors.toList());
+        System.out.println("Contacts sorted by First Name:");
         System.out.println(sortedContactDetails);
+    }
+    public void sortContacts(ArrayList<Contacts> contactDetails){
+        System.out.println("Enter choice: \n1. Sort by City \n2. Sort by State \n3. Sort by Zip Code");
+        int select = sc.nextInt();
+        List<Contacts> sortedContactDetailsByCity = contactDetails.stream()
+                .sorted(Comparator.comparing(Contacts::getCity))
+                .collect(Collectors.toList());
+        List<Contacts> sortedContactDetailsByState = contactDetails.stream()
+                .sorted(Comparator.comparing(Contacts::getState))
+                .collect(Collectors.toList());
+        List<Contacts> sortedContactDetailsByZip = contactDetails.stream()
+                .sorted(Comparator.comparing(Contacts::getZipCode))
+                .collect(Collectors.toList());
+        switch (select){
+            case 1:
+                System.out.println("Contacts sorted by City: \n"+sortedContactDetailsByCity);
+                break;
+            case 2:
+                System.out.println("Contacts sorted by State: \n"+sortedContactDetailsByState);
+                break;
+            case 3:
+                System.out.println("Contacts sorted by Zip Code: \n"+sortedContactDetailsByZip);
+                break;
+            default:
+                System.out.println("Invalid choice");
+                break;
+        }
     }
     public static void displayActionMenu(AddressBookSystem addressDetails, ArrayList<Contacts> contactDetails){
         int selectMenuOption;
@@ -180,7 +208,8 @@ public class AddressBookSystem {
             System.out.println("Enter a number to perform action: \n1. Add contact details " +
                     "\n2. Edit contact details \n3. Delete contact details " +
                     "\n4. Display contact details \n5. Search contact by city or state" +
-                    "\n6. View Dictionary \n7. Count Contact \n8. Get sorted contact details \n0. Exit");
+                    "\n6. View Dictionary \n7. Count Contact \n8. Sort contact details by First Name" +
+                    "\n9. Sort by City, State or Zip \n0. Exit");
             selectMenuOption = sc.nextInt();
 
             switch (selectMenuOption) {
@@ -214,6 +243,10 @@ public class AddressBookSystem {
                     break;
                 case 8:
                     /*  Sort contacts  */
+                    addressDetails.sortContactsByName(contactDetails);
+                    break;
+                case 9:
+                    /*  Sort by City, State or Zip  */
                     addressDetails.sortContacts(contactDetails);
                     break;
                 case 0:
