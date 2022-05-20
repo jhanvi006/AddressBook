@@ -1,5 +1,6 @@
 package com.bridgelabz;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AddressBookSystem {
     static Scanner sc = new Scanner(System.in);
@@ -145,7 +146,7 @@ public class AddressBookSystem {
                 break;
         }
     }
-    private void countContact() {
+    public void countContact() {
         HashMap<String, Integer> countContactByCity = new HashMap<>();
         HashMap<String, Integer> countContactByState = new HashMap<>();
         for (Map.Entry<String, ArrayList<Contacts>> contactDetails:addressBookList.entrySet()) {
@@ -167,13 +168,19 @@ public class AddressBookSystem {
         System.out.println("No. of contacts from different states are ");
         System.out.println(countContactByState);
     }
+    public void sortContacts(ArrayList<Contacts> contactDetails){
+        List<Contacts> sortedContactDetails = contactDetails.stream()
+                .sorted(Comparator.comparing(Contacts::getFirstName))
+                .collect(Collectors.toList());
+        System.out.println(sortedContactDetails);
+    }
     public static void displayActionMenu(AddressBookSystem addressDetails, ArrayList<Contacts> contactDetails){
         int selectMenuOption;
         do {
             System.out.println("Enter a number to perform action: \n1. Add contact details " +
                     "\n2. Edit contact details \n3. Delete contact details " +
                     "\n4. Display contact details \n5. Search contact by city or state" +
-                    "\n6. View Dictionary \n7. Count Contact \n0. Exit");
+                    "\n6. View Dictionary \n7. Count Contact \n8. Get sorted contact details \n0. Exit");
             selectMenuOption = sc.nextInt();
 
             switch (selectMenuOption) {
@@ -204,6 +211,10 @@ public class AddressBookSystem {
                 case 7:
                     /*  Count contacts based on city and state  */
                     addressDetails.countContact();
+                    break;
+                case 8:
+                    /*  Sort contacts  */
+                    addressDetails.sortContacts(contactDetails);
                     break;
                 case 0:
                     System.out.println("Exit!");
