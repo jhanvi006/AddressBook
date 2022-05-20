@@ -169,33 +169,33 @@ public class AddressBookSystem {
         System.out.println(countContactByState);
     }
     public void sortContactsByName(ArrayList<Contacts> contactDetails){
-        List<Contacts> sortedContactDetails = contactDetails.stream()
-                .sorted(Comparator.comparing(Contacts::getFirstName))
-                .collect(Collectors.toList());
         System.out.println("Contacts sorted by First Name:");
-        System.out.println(sortedContactDetails);
+        contactDetails.stream()
+                .sorted(Comparator.comparing(Contacts::getFirstName))
+                .forEach(System.out::println);
     }
     public void sortContacts(ArrayList<Contacts> contactDetails){
         System.out.println("Enter choice: \n1. Sort by City \n2. Sort by State \n3. Sort by Zip Code");
         int select = sc.nextInt();
-        List<Contacts> sortedContactDetailsByCity = contactDetails.stream()
-                .sorted(Comparator.comparing(Contacts::getCity))
-                .collect(Collectors.toList());
-        List<Contacts> sortedContactDetailsByState = contactDetails.stream()
-                .sorted(Comparator.comparing(Contacts::getState))
-                .collect(Collectors.toList());
-        List<Contacts> sortedContactDetailsByZip = contactDetails.stream()
-                .sorted(Comparator.comparing(Contacts::getZipCode))
-                .collect(Collectors.toList());
+
         switch (select){
             case 1:
-                System.out.println("Contacts sorted by City: \n"+sortedContactDetailsByCity);
+                System.out.println("Contacts sorted by City: ");
+                contactDetails.stream()
+                        .sorted(Comparator.comparing(Contacts::getCity))
+                        .forEach(System.out::println);
                 break;
             case 2:
-                System.out.println("Contacts sorted by State: \n"+sortedContactDetailsByState);
+                System.out.println("Contacts sorted by State: ");
+                contactDetails.stream()
+                        .sorted(Comparator.comparing(Contacts::getState))
+                        .forEach(System.out::println);
                 break;
             case 3:
-                System.out.println("Contacts sorted by Zip Code: \n"+sortedContactDetailsByZip);
+                System.out.println("Contacts sorted by Zip Code: ");
+                contactDetails.stream()
+                        .sorted(Comparator.comparing(Contacts::getZipCode))
+                        .forEach(System.out::println);
                 break;
             default:
                 System.out.println("Invalid choice");
